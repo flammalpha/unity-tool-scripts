@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using FlammAlpha.UnityTools.Common;
 
-namespace FlammAlpha.UnityTools.Animation
+namespace FlammAlpha.UnityTools.Mesh
 {
     /// <summary>
     /// Editor window that displays stats about all MeshRenderer and SkinnedMeshRenderer components
@@ -53,6 +53,17 @@ namespace FlammAlpha.UnityTools.Animation
                 DrawTitle("Please assign an Avatar GameObject");
                 return;
             }
+
+            // Display totals
+            int totalTriangles = meshStats.Sum(e => e.triangleCount);
+            int totalMaterials = meshStats.Sum(e => e.materials?.Length ?? 0);
+            using (new GUILayout.VerticalScope("box"))
+            {
+                EditorGUILayout.LabelField("Total Triangles:", totalTriangles.ToString(), EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Total Materials:", totalMaterials.ToString(), EditorStyles.boldLabel);
+            }
+
+            GUILayout.Space(8);
 
             scrollPos = GUILayout.BeginScrollView(scrollPos);
 
